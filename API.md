@@ -12,6 +12,16 @@
 
 - ## Database
     - ### PostgreSQL porque sim.
+    - ### Modelo da database
+        - Carros
+            - id_carros PRIMARY KEY, VARCHAR
+            - nome_carro VARCHAR(30)
+            - DadosDaAPI ...
+            - ...
+        - Fontes
+            - url_fonte PRIMARY KEY, VARCHAR
+            - Dados
+            - ...
 
 - ## Web Scrapping
     - ### Sites fonte
