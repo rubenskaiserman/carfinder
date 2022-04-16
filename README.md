@@ -1,2 +1,4 @@
 # car_search
-Encontre todas as informações sobre o carro que você quer, bem aqui
+### Search engine que permite a você encontrar o modelo do seu carro, junto de todas as informações necessárias sobre ele
+
+<Descrever melhor posteriormente> 
