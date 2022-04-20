@@ -1,0 +1,43 @@
+DROP DATABASE car_search IF EXISTS;
+CREATE DATABASE car_search;
+\c car_search
+CREATE TABLE carros_inicial(
+    url VARCHAR PRIMARY KEY,
+    motor VARCHAR,
+    codigo_motor VARCHAR,
+    combustivel VARCHAR,
+    refrigerador VARCHAR,
+    disposicao VARCHAR,
+    cilindrada VARCHAR,
+    diametro_cilindro VARCHAR,
+    valvulas VARCHAR, 
+    aspiracao VARCHAR,
+    taxa_compressao REAL,
+    potencia VARCHAR,
+    torque VARCHAR,
+    tracao VARCHAR,
+    cambio VARCHAR,
+    tanque INT,
+    max_speed INT,
+    aceleracao INT,
+    carroceria VARCHAR,
+    portas INT,
+    dist_eixos REAL,
+    comprimento REAL,
+    largura REAL,
+    altura REAL,
+    bitola_dianteira REAL,
+    bitola_trazeira REAL,
+    coeficiente_aerodinamico REAL,
+    freios_dianteiros VARCHAR,
+    freios_trazeiros VARCHAR,
+    pneus_frente VARCHAR,
+    pneus_traz VARCHAR,
+    peso REAL,
+    peso_potencia REAL,
+    volume_mala REAL,
+    direcao VARCHAR,
+    suspencao_front VARCHAR,
+    suspencao_final VARCHAR
+);
+
