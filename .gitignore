@@ -129,4 +129,5 @@ dmypy.json
 .pyre/
 
 remove.txt
-bot.py
+
+scripts/bot.py
