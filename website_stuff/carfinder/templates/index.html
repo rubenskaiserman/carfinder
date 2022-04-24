@@ -1,0 +1,15 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+    car_search
+{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="../static/css/index.css">
+{% endblock %}
+
+
+{% block body %}
+    <form name="s" action="/" method="GET">
+        <input type="text" name="q" id="q" autocomplete="off">
+    </form>
+{% endblock %}
