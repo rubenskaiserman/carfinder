@@ -7,11 +7,21 @@
 {% block body %}
     <h1>Carfinder</h1>
     <form action="/" method="GET">
-        <input type="text" name="teste" oninput="mostrarOpcoes()">
+        <input type="text" name="q">
     </form>
-    <script>
+    {% if result == False %}
+        <h1>Batata</h1>
+    {% elif result == "Lasanha" %}
+        <h1>{{result}}</h1>
+    {% else %}
+        {% for car in result %}
+            <h1>{{car}}</h1>
+        {% endfor %}
+    
+    {% endif%}
+    <!-- <script>
         function mostrarOpcoes(){
             
         }
-    </script>
+    </script> -->
 {% endblock %}

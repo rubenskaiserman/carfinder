@@ -1,33 +1,48 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, render_template
 import psycopg
 import json
 # import psycopg.extras
 
 app = Flask(__name__)
 
+def json_parse(data: list, cur) -> list:
+    response = []
+    for result in data:
+        i = 0
+        json_data = dict()
+        for column in cur.description:
+            json_data[column.name] = result[i]
+            i += 1
+        response.append(json.dumps(json_data, indent=4))
+    return response
+
 @app.route('/', methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
-
-# def get_request(id:str):
-#     with psycopg.connect("dbname=car_search user=kaiserman password=chakalaka") as conn:
-#         with conn.cursor() as cur:
-#             cur.execute(f"SELECT id, marca, modelo, mod, img FROM cars WHERE id='{id}'")
-#             dict_result = dict()
-#             result = cur.fetchall()
-#             i = 0
-#             for column in cur.description:
-#                 dict_result[column.name] = result[0][i]
-#                 i+=1
-            
-#             return dict_result
-
-
-# teste = json.dumps(get_request('9ecbe8c340a04bb1ab3837c6f9232ff7'), indent=4)
-# print(teste)
-    
-            
-
-
-
-
+    columns = [
+        'marca', 'modelo', 'mod', 'body_type', 'portas', 'bancos', 'bagagem', 'combustivel', 'sistema_combustivel',
+        'tipo_motor', 'posicao_motor', 'capacidade_motor', 'cylinders', 'power_out', 'aceleracao', 'velocidade_max',
+        'rodas_motrizes', 'tipo_direcao', 'gear_box', 'comprimento', 'largura', 'altura', 'peso', 'wheel_base', 
+        'suspencao_frontal', 'suspencao_traseira', 'freios_frontais', 'freios_traseiros', 'pneus_frontais', 
+        'pneus_traseiros', 'fuel_urban', 'fuel_extra_urban', 'fuel_combined', 'volume_tanque'
+        ]
+    with psycopg.connect("dbname=car_search user=usuario password='batatinha123'") as conn:
+        with conn.cursor() as cur:
+            GET = request.args.get("q")
+            if GET != None:
+                GET = GET.lower()
+                has_result = False
+                for column in columns:
+                    try:
+                        cur.execute(f"SELECT id, marca, modelo, mod, img FROM cars WHERE {column} LIKE '%{GET}%'")
+                        result = json_parse(cur.fetchall(), cur)
+                        if result != []:
+                            has_result = True
+                            break
+                    except:
+                        pass
+                if has_result:
+                    return render_template("index.html", result=result)
+                else:
+                    return render_template("index.html", result="Lasanha")
+            else:
+                return render_template("index.html", result=False)
