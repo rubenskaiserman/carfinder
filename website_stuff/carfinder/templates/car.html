@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <img src="{{response['img']}}" alt="">
+    {% for column, value in response.items() %}
+        <h1>{{column}}: {{value}}</h1>
+    {% endfor %}
+
+{% endblock %}

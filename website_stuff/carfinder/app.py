@@ -1,7 +1,5 @@
 from flask import Flask, request, render_template
 import psycopg
-import json
-# import psycopg.extras
 
 app = Flask(__name__)
 
@@ -13,7 +11,7 @@ def json_parse(data: list, cur) -> list:
         for column in cur.description:
             json_data[column.name] = result[i]
             i += 1
-        response.append(json.dumps(json_data, indent=4))
+        response.append(json_data)
     return response
 
 @app.route('/', methods=["GET", "POST"])
@@ -25,6 +23,7 @@ def index():
         'suspencao_frontal', 'suspencao_traseira', 'freios_frontais', 'freios_traseiros', 'pneus_frontais', 
         'pneus_traseiros', 'fuel_urban', 'fuel_extra_urban', 'fuel_combined', 'volume_tanque'
         ]
+
     with psycopg.connect("dbname=car_search user=usuario password='batatinha123'") as conn:
         with conn.cursor() as cur:
             GET = request.args.get("q")
@@ -46,3 +45,17 @@ def index():
                     return render_template("index.html", result="Lasanha")
             else:
                 return render_template("index.html", result=False)
+
+@app.route('/car')
+def car():
+    with psycopg.connect("dbname=car_search user=usuario password='batatinha123'") as conn:
+        with conn.cursor() as cur:
+            try:
+                GET = request.args.get('car')
+                cur.execute(f"SELECT * FROM cars WHERE id='{GET}'")
+                response = json_parse(cur.fetchall(), cur)
+                return render_template("car.html", response=response[0])
+            except:
+                return render_template("error404.html")
+
+    

@@ -3,25 +3,44 @@
 {% block title %}
     Testando aqui
 {% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="../static/style.css">
+{% endblock %}
 
 {% block body %}
-    <h1>Carfinder</h1>
-    <form action="/" method="GET">
-        <input type="text" name="q">
-    </form>
-    {% if result == False %}
-        <h1>Batata</h1>
-    {% elif result == "Lasanha" %}
-        <h1>{{result}}</h1>
-    {% else %}
-        {% for car in result %}
-            <h1>{{car}}</h1>
-        {% endfor %}
-    
-    {% endif%}
-    <!-- <script>
-        function mostrarOpcoes(){
-            
-        }
-    </script> -->
+    <div id="search">
+        <img id="background" src="../static/img/chi-xiang-QIeJeacWug8-unsplash.png" alt="">
+        <h1>Carfinder</h1>
+        <form action="/" method="GET">
+            <input id="query" type="text" name="q" autocomplete="off">
+            <input  id="pes" type="submit" value="Pesquisar">
+        </form>
+    </div>
+        {% if result == False %}
+            <div id="result">
+                <h2>Bem Vindo</h2>
+                <h3>Está a procura do seu carro ideal? Você está no lugar certo!</h3>
+                <p>
+                    Nosso vasto catalogo oferece várias alternativas para garantir que seu futuro seja completamente confortável, seguro e fácil com seu novo automóvel.
+                </p>
+            </div>
+        {% elif result == "Lasanha" %}
+            <div id="result">
+                <h2>Nenhum resultado encontrado :(</h2>
+            </div>
+        {% else %}
+            <div class="carrinhos">
+                {% for car in result %}
+                    <div class="card">
+                        <a href="./car?car={{ car['id'] }}">
+                            <img src={{car['img']}} alt=""> 
+                            <div class="card_text">
+                                <p>{{car['marca']}} {{car['modelo']}} {{car['mod']}}</p>   
+                            </div>
+                        </a>
+                    </div>
+                    <br>
+                {% endfor %}
+            </div>     
+        {% endif%}    
 {% endblock %}
