@@ -1,9 +1,31 @@
 {% extends "base.html" %}
 
 {% block body %}
-    <img src="{{response['img']}}" alt="">
-    {% for column, value in response.items() %}
-        <h1>{{column}}: {{value}}</h1>
-    {% endfor %}
+    <div class="header">
+        <img src="{{response[-1][1]}}" alt="">
+    </div>
+    <div class="moldura">
+        <img src="{{response[-1][1]}}" alt="">
+    </div>
+        <h1>{{response[1][1]}} {{response[2][1]}} {{response[3][1]}}</h1>
+        <ul>
+            {%
+                set parts = [
+                'Tipo do Corpo', 'Portas', 'Bancos', 'Bagagem', 'Combustivel', 'Sistema de Combustivel',
+                'Tipo do Motor', 'Posicao do Motor', 'Capacidade do Motor', 'Cilindros', 'Power Out', 'Aceleração', 'Velocidade Máxima',
+                'Rodas Motrizes', 'Tipo de Direção', 'Gear Box', 'Comprimento', 'Largura', 'Altura', 'Peso', 'Wheel Base', 
+                'Suspencao Frontal', 'Suspencao Traseira', 'Freios Frontais', 'Freios Traseiros', 'Pneus Frontais', 
+                'Pneus Traseiros', 'Combustível Urbano', 'Combustível Extra-urbano', 'Combustível combinado', 'Volume do tanque'
+                ]
+
+            %}
+            <ul>
+                {% for part in parts %}
+                    <li>{{part}}: {{response[parts.index(part) + 4][1]}}</li>
+                {% endfor %}
+            </ul>
+            
+        </ul>
+        
 
 {% endblock %}

@@ -50,12 +50,13 @@ def index():
 def car():
     with psycopg.connect("dbname=car_search user=usuario password='batatinha123'") as conn:
         with conn.cursor() as cur:
-            try:
-                GET = request.args.get('car')
-                cur.execute(f"SELECT * FROM cars WHERE id='{GET}'")
-                response = json_parse(cur.fetchall(), cur)
-                return render_template("car.html", response=response[0])
-            except:
-                return render_template("error404.html")
+            # try:
+            GET = request.args.get('car')
+            cur.execute(f"SELECT * FROM cars WHERE id='{GET}'")
+            response = json_parse(cur.fetchall(), cur)
+            # print(list(response[0].items()))
+            return render_template("car.html", response=list(response[0].items()))
+            # except:
+            #     return render_template("error404.html")
 
     
