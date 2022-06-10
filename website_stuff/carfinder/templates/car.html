@@ -1,13 +1,19 @@
 {% extends "base.html" %}
 
+{% block head %}
+    <link rel="stylesheet" href="../static/car.css">
+
+{% endblock %}
+
 {% block body %}
-    <div class="header">
+    <!-- <div class="header">
         <img src="{{response[-1][1]}}" alt="">
-    </div>
+    </div> -->
     <div class="moldura">
         <img src="{{response[-1][1]}}" alt="">
     </div>
-        <h1>{{response[1][1]}} {{response[2][1]}} {{response[3][1]}}</h1>
+        <h1>{{response[1][1]}} {{response[2][1]}}</h1>
+        <h1> {{response[3][1]}}</h1>
         <ul>
             {%
                 set parts = [
@@ -21,7 +27,7 @@
             %}
             <ul>
                 {% for part in parts %}
-                    <li>{{part}}: {{response[parts.index(part) + 4][1]}}</li>
+                    <li><span>{{part}}:</span> {{response[parts.index(part) + 4][1]}}</li>
                 {% endfor %}
             </ul>
             
