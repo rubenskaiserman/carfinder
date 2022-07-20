@@ -58,5 +58,3 @@ def car():
             return render_template("car.html", response=list(response[0].items()))
             # except:
             #     return render_template("error404.html")
-
-    

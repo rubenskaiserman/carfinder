@@ -5,13 +5,16 @@ from webdriver_manager.chrome import ChromeDriverManager
 import psycopg as db
 import uuid
 
+# Retorna a marca, modelo e modificação do carro
 def get_car(driver: webdriver) -> list:
     car_path = driver.find_element(by=By.CSS_SELECTOR, value='.navigation')
     return car_path.text.split('/')[1:]
 
+# Retorna o link para a imagem do carro
 def get_image(driver: webdriver) -> str:
     return driver.find_element(by=By.CSS_SELECTOR, value='.fl img').get_attribute('src')
     
+# Retorna uma list com todas as informações dos carros
 def get_data(driver: webdriver) -> list:
     data = get_car(driver)
 
@@ -21,6 +24,7 @@ def get_data(driver: webdriver) -> list:
     data.append(get_image(driver))
     return data
 
+# Retorna uma string com os dados a serem inseridos na database
 def generate_query(data: list, hex_id: str) -> str:
     query = f"'{hex_id}', "
     for field in data[:-1]:
@@ -29,6 +33,8 @@ def generate_query(data: list, hex_id: str) -> str:
 
     return query
 
+# Retorna um tuple com os ids das páginas que deram erro e um set com as informações obtidas com sucesso
+# Também insere os valores obtidos no banco de dados
 def insert_data(ids: list, driver: webdriver, root: str, hash_set: set) -> list:
     errors = []
     for id in ids:
@@ -55,10 +61,11 @@ def main():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
     hash_set = set()
-    res = insert_data(range(18442, 19998), driver, root, set())
+    res = insert_data(range(1, 19998), driver, root, set())
     errors, hash_set = res[0], res[1]
     persistent_errors = insert_data(errors, driver, root, hash_set)[0]
 
+    # Escreve em um arquivo csv os ids que deram erro
     with open('errors.csv', 'w') as problems:
         w_str = ''
         for id in persistent_errors:
@@ -67,3 +74,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
